@@ -67,17 +67,15 @@ const preparePageForTests = async page => {
 
   const part = process.argv[2] || '9589899'
   console.log('scraping part', part)
+
   const testUrl = `https://uk.farnell.com/${part}`
   await page.goto(testUrl)
 
   await page.waitForSelector('dd')
-
   console.log(page.url())
-  const headings = await page.$$eval('.availabilitySubHeading', nodes =>
-    nodes.map(n => n.innerText),
-  )
+
   const avail = await page.$eval('.availabilityHeading.available', n => n.innerText)
-  console.log('stock', parseInt(avail, 10))
+  console.log(avail)
 
   await browser.close()
 })()
