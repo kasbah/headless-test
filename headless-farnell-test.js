@@ -1,8 +1,7 @@
 // testing scraping the farnell site
 // run with: node headless-farnell-test.js
 
-const puppeteer = require('puppeteer');
-
+const puppeteer = require('puppeteer')
 
 // This is where we'll put the code to get around the tests.
 const preparePageForTests = async page => {
@@ -11,8 +10,8 @@ const preparePageForTests = async page => {
   // Pass the User-Agent Test.
   const userAgent =
     'Mozilla/5.0 (X11; Linux x86_64)' +
-    'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36';
-  await page.setUserAgent(userAgent);
+    'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36'
+  await page.setUserAgent(userAgent)
 
   // below we have tricks that didn't seem to help or be needed
 
@@ -58,27 +57,27 @@ const preparePageForTests = async page => {
   //    get: () => ['en-US', 'en'],
   //  });
   //});
-};
+}
 
-(async () => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
+;(async () => {
+  const browser = await puppeteer.launch()
+  const page = await browser.newPage()
 
-  await preparePageForTests(page);
+  await preparePageForTests(page)
 
-  const part = process.argv[2] || '9589899 '
+  const part = process.argv[2] || '9589899'
   console.log('scraping part', part)
-  const testUrl = `https://uk.farnell.com/${part}`;
-  await page.goto(testUrl);
+  const testUrl = `https://uk.farnell.com/${part}`
+  await page.goto(testUrl)
 
   await page.waitForSelector('dd')
 
-  console.log(page.url());
+  console.log(page.url())
   const headings = await page.$$eval('.availabilitySubHeading', nodes =>
     nodes.map(n => n.innerText),
-  );
+  )
   const avail = await page.$eval('.availabilityHeading.available', n => n.innerText)
   console.log('stock', parseInt(avail, 10))
 
-  await browser.close();
-})();
+  await browser.close()
+})()
