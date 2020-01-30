@@ -68,14 +68,17 @@ const preparePageForTests = async page => {
   const part = process.argv[2] || '9589899'
   console.log('scraping part', part)
 
-  const testUrl = `https://uk.farnell.com/${part}`
+  //const testUrl = `https://uk.farnell.com/${part}`
+  const testUrl = 'https://uk.farnell.com/browse-for-products'
   await page.goto(testUrl)
 
-  await page.waitForSelector('dd')
+  //await page.waitForSelector('dd')
+  await page.waitForSelector('nav.filterCategoryLevelOne')
   console.log(page.url())
 
-  const avail = await page.$eval('.availabilityHeading.available', n => n.innerText)
-  console.log(avail)
+  //const avail = await page.$eval('.availabilityHeading.available', n => n.innerText)
+  //console.log(avail)
+  await page.screenshot({ path: './image.jpg', type: 'jpeg' });
 
   await browser.close()
 })()
